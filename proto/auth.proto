@@ -1,0 +1,24 @@
+syntax = "proto2";
+
+import "nanopb.proto"; // Import Nanopb options
+
+/* Messages for the Authentication Protocol */
+
+message ClientHello {
+    // Use a fixed-size string array (adjust size as needed)
+    required string serial_id = 1 [(nanopb).max_size = 64];
+    // Use fixed-size bytes array (64 bytes for ECDSA signature)
+    required bytes signature = 2 [(nanopb).max_size = 64];
+}
+
+message ServerChallenge {
+    // Use fixed-size bytes array (32 bytes for nonce)
+    required bytes nonce = 1 [(nanopb).max_size = 32];
+    // Use fixed-size bytes array (64 bytes for ECDSA signature)
+    required bytes server_signature = 2 [(nanopb).max_size = 64];
+}
+
+message ClientResponse {
+    // Use fixed-size bytes array (64 bytes for ECDSA signature)
+    required bytes client_signature = 1 [(nanopb).max_size = 64];
+}
